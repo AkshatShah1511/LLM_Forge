@@ -1,7 +1,6 @@
-
 import React, { useState } from 'react';
 import { useToast } from "@/hooks/use-toast";
-import { Github, LogIn, User, Mail, Lock, ArrowRight, Google } from 'lucide-react';
+import { Github, LogIn, User, Mail, Lock, ArrowRight } from 'lucide-react';
 import { cn } from '@/lib/utils';
 
 type AuthMode = 'signin' | 'signup';
@@ -79,7 +78,7 @@ const AuthForm = () => {
           className="social-btn"
           onClick={() => handleSocialAuth('google')}
         >
-          <Google className="w-5 h-5 text-purple-600" />
+          <Mail className="w-5 h-5 text-purple-600" />
           <span>Continue with Google</span>
         </button>
       </div>
