@@ -1,12 +1,57 @@
-// Update this page (the content is just a fallback if you fail to update the page)
+
+import React from 'react';
+import { useNavigate } from 'react-router-dom';
+import { LogOut } from 'lucide-react';
 
 const Index = () => {
+  const navigate = useNavigate();
+  
+  const handleLogout = () => {
+    // In a real app, this would handle your logout logic
+    navigate('/');
+  };
+  
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-100">
-      <div className="text-center">
-        <h1 className="text-4xl font-bold mb-4">Welcome to Your Blank App</h1>
-        <p className="text-xl text-gray-600">Start building your amazing project here!</p>
-      </div>
+    <div className="min-h-screen bg-background">
+      <header className="border-b border-white/10">
+        <div className="container mx-auto px-4 py-4 flex justify-between items-center">
+          <h1 className="text-2xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-purple-500 to-purple-700">
+            Elevation
+          </h1>
+          <button 
+            onClick={handleLogout}
+            className="flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground transition-colors"
+          >
+            <LogOut className="h-4 w-4" />
+            Logout
+          </button>
+        </div>
+      </header>
+      
+      <main className="container mx-auto px-4 py-12">
+        <div className="max-w-3xl mx-auto">
+          <div className="glass-card p-8 animate-fade-in">
+            <h2 className="text-2xl font-bold mb-4">Welcome to Your Dashboard</h2>
+            <p className="text-muted-foreground mb-6">
+              You have successfully signed in to your account. This is where you would see your personalized content.
+            </p>
+            
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+              {[1, 2, 3].map((item) => (
+                <div 
+                  key={item}
+                  className="bg-white/5 backdrop-blur-sm border border-white/10 rounded-lg p-4 hover:bg-purple-600/5 transition-colors"
+                >
+                  <h3 className="font-medium mb-2">Feature {item}</h3>
+                  <p className="text-sm text-muted-foreground">
+                    This is a placeholder for your amazing content or dashboard features.
+                  </p>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      </main>
     </div>
   );
 };
