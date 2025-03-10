@@ -1,3 +1,5 @@
+import { User } from 'lucide-react'
+import { Skeleton } from '@/components/ui/skeleton'
 import React, { Suspense } from 'react'
 
 function page() {
@@ -10,13 +12,46 @@ function page() {
             </div>
         </div>
         <div className="h-full py-6">
-            <Suspense fallback={<div>Loading...</div>}>
-                {/* Replace with your Workflows component when available */}
-                <div>Workflows content will go here</div>
+            <Suspense fallback={<UserWorkflowsSkeleton />}>
+                <WorkflowsWrapper />
             </Suspense>
         </div>
     </div>
   );
 }
 
-export default page
+function UserWorkflowsSkeleton() {
+    return(
+        <div className="space-y-2">
+            {[1,2,3,4].map((i) => (
+                <Skeleton key={i} className="h-32 w-full" />
+            ))}
+        </div>
+    )
+}
+
+// Client component wrapper
+function WorkflowsWrapper() {
+    const [workflows, setWorkflows] = React.useState(null);
+    
+    React.useEffect(() => {
+        // Fetch workflows data here
+        // This is a placeholder for actual data fetching
+    }, []);
+    
+    return (
+        <div>
+            {/* Display workflows data here */}
+            Workflows content
+        </div>
+    );
+}
+
+// Keep this for server-side data fetching if needed
+async function UserWorkflows() {
+    return (
+        <div></div>
+    )
+}
+
+export default page;
