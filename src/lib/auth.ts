@@ -1,7 +1,5 @@
 
-// This is a placeholder for NextAuth integration
-// In a real implementation, you would use NextAuth.js with proper session management
-
+import React from 'react';
 import { toast } from "sonner";
 
 // Mock user type that would normally come from your database
