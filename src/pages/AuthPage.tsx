@@ -12,7 +12,7 @@ const AuthPage = () => {
         <div className="text-center">
           <h1 className="text-4xl font-bold tracking-tight text-foreground">
             <span className="bg-clip-text text-transparent bg-gradient-to-r from-purple-500 to-purple-700">
-              Elevation
+              Scrapify
             </span>
           </h1>
           <p className="mt-2 text-sm text-muted-foreground">
