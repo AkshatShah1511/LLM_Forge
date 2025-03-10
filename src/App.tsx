@@ -11,6 +11,8 @@ import WorkspacePage from "./pages/WorkspacePage";
 import ProfilePage from "./pages/ProfilePage";
 import MarketplacePage from "./pages/MarketplacePage";
 import CreditsPage from "./pages/CreditsPage";
+import SettingsPage from "./pages/SettingsPage";
+import ScrapeDataPage from "./pages/ScrapeDataPage";
 import { WorkspaceProvider } from "./contexts/WorkspaceContext";
 import { ProfileProvider } from "./contexts/ProfileContext";
 import { ThemeProvider } from "./contexts/ThemeContext";
@@ -33,6 +35,8 @@ const App = () => (
                 <Route path="/profile" element={<ProfilePage />} />
                 <Route path="/marketplace" element={<MarketplacePage />} />
                 <Route path="/credits" element={<CreditsPage />} />
+                <Route path="/settings" element={<SettingsPage />} />
+                <Route path="/scrape-data" element={<ScrapeDataPage />} />
                 {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
                 <Route path="*" element={<NotFound />} />
               </Routes>

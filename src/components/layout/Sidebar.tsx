@@ -9,10 +9,13 @@ import {
   CreditCard, 
   ChevronLeft, 
   ChevronRight,
-  LogOut
+  LogOut,
+  Settings,
+  FileDown
 } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { useProfile } from '@/contexts/ProfileContext';
+import { ThemeToggle } from '@/components/theme/ThemeToggle';
 
 export function Sidebar() {
   const [isCollapsed, setIsCollapsed] = useState(false);
@@ -26,6 +29,8 @@ export function Sidebar() {
     { name: 'Profile', icon: User, path: '/profile' },
     { name: 'Marketplace', icon: Store, path: '/marketplace' },
     { name: 'Credits', icon: CreditCard, path: '/credits' },
+    { name: 'Scrape Data', icon: FileDown, path: '/scrape-data' },
+    { name: 'Settings', icon: Settings, path: '/settings' },
   ];
 
   return (
@@ -38,7 +43,7 @@ export function Sidebar() {
       <div className="flex items-center justify-between p-4 border-b">
         {!isCollapsed && (
           <h2 className="text-xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-purple-500 to-purple-700">
-            Elevation
+            Scrapify
           </h2>
         )}
         <button 
@@ -78,6 +83,11 @@ export function Sidebar() {
       </div>
       
       <div className="p-4 border-t">
+        {!isCollapsed && (
+          <div className="mb-4">
+            <ThemeToggle />
+          </div>
+        )}
         {isCollapsed ? (
           <div className="flex justify-center">
             <div className="h-8 w-8 rounded-full bg-purple-600/20 flex items-center justify-center text-sm font-medium text-purple-600">

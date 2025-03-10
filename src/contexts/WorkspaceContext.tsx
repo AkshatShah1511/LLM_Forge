@@ -1,4 +1,3 @@
-
 import React, { createContext, useContext, useState, useEffect } from 'react';
 import { v4 as uuidv4 } from 'uuid';
 import { Workspace } from '@/types/workspace';
@@ -24,7 +23,6 @@ export function WorkspaceProvider({ children }: { children: React.ReactNode }) {
   const [currentWorkspace, setCurrentWorkspace] = useState<Workspace | null>(null);
   const [projects, setProjects] = useState<Project[]>([]);
 
-  // Load workspaces and projects from localStorage on initial render
   useEffect(() => {
     const savedWorkspaces = localStorage.getItem('workspaces');
     const savedCurrentWorkspaceId = localStorage.getItem('currentWorkspaceId');
@@ -47,7 +45,6 @@ export function WorkspaceProvider({ children }: { children: React.ReactNode }) {
     }
   }, []);
 
-  // Save workspaces and projects to localStorage when they change
   useEffect(() => {
     if (workspaces.length > 0) {
       localStorage.setItem('workspaces', JSON.stringify(workspaces));
@@ -62,7 +59,6 @@ export function WorkspaceProvider({ children }: { children: React.ReactNode }) {
     }
   }, [workspaces, currentWorkspace, projects]);
 
-  // Get projects for the current workspace
   const workspaceProjects = currentWorkspace 
     ? projects.filter(project => project.workspaceId === currentWorkspace.id)
     : [];
@@ -105,7 +101,6 @@ export function WorkspaceProvider({ children }: { children: React.ReactNode }) {
     const filteredWorkspaces = workspaces.filter(workspace => workspace.id !== id);
     setWorkspaces(filteredWorkspaces);
     
-    // Delete all projects in this workspace
     const filteredProjects = projects.filter(project => project.workspaceId !== id);
     setProjects(filteredProjects);
     
