@@ -8,7 +8,11 @@ import Index from "./pages/Index";
 import AuthPage from "./pages/AuthPage";
 import NotFound from "./pages/NotFound";
 import WorkspacePage from "./pages/WorkspacePage";
+import ProfilePage from "./pages/ProfilePage";
+import MarketplacePage from "./pages/MarketplacePage";
+import CreditsPage from "./pages/CreditsPage";
 import { WorkspaceProvider } from "./contexts/WorkspaceContext";
+import { ProfileProvider } from "./contexts/ProfileContext";
 import { ThemeProvider } from "./contexts/ThemeContext";
 
 const queryClient = new QueryClient();
@@ -16,21 +20,26 @@ const queryClient = new QueryClient();
 const App = () => (
   <QueryClientProvider client={queryClient}>
     <ThemeProvider>
-      <WorkspaceProvider>
-        <TooltipProvider>
-          <Toaster />
-          <Sonner />
-          <BrowserRouter>
-            <Routes>
-              <Route path="/" element={<AuthPage />} />
-              <Route path="/dashboard" element={<Index />} />
-              <Route path="/workspace" element={<WorkspacePage />} />
-              {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
-              <Route path="*" element={<NotFound />} />
-            </Routes>
-          </BrowserRouter>
-        </TooltipProvider>
-      </WorkspaceProvider>
+      <ProfileProvider>
+        <WorkspaceProvider>
+          <TooltipProvider>
+            <Toaster />
+            <Sonner />
+            <BrowserRouter>
+              <Routes>
+                <Route path="/" element={<AuthPage />} />
+                <Route path="/dashboard" element={<Index />} />
+                <Route path="/workspace" element={<WorkspacePage />} />
+                <Route path="/profile" element={<ProfilePage />} />
+                <Route path="/marketplace" element={<MarketplacePage />} />
+                <Route path="/credits" element={<CreditsPage />} />
+                {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
+                <Route path="*" element={<NotFound />} />
+              </Routes>
+            </BrowserRouter>
+          </TooltipProvider>
+        </WorkspaceProvider>
+      </ProfileProvider>
     </ThemeProvider>
   </QueryClientProvider>
 );

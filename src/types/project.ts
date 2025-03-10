@@ -9,4 +9,6 @@ export interface Project {
   workspace?: Workspace;
   createdAt: Date;
   updatedAt: Date;
+  status?: 'active' | 'archived' | 'completed';
+  thumbnail?: string;
 }
