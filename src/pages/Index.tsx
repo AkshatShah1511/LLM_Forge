@@ -3,6 +3,7 @@ import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { LogOut, FolderKanban } from 'lucide-react';
 import { WorkspaceSelector } from '@/components/workspace/WorkspaceSelector';
+import { ThemeToggle } from '@/components/theme/ThemeToggle';
 
 const Index = () => {
   const navigate = useNavigate();
@@ -27,13 +28,16 @@ const Index = () => {
             <div className="h-5 border-l border-white/10 ml-2"></div>
             <WorkspaceSelector />
           </div>
-          <button 
-            onClick={handleLogout}
-            className="flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground transition-colors"
-          >
-            <LogOut className="h-4 w-4" />
-            Logout
-          </button>
+          <div className="flex items-center gap-3">
+            <ThemeToggle />
+            <button 
+              onClick={handleLogout}
+              className="flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground transition-colors"
+            >
+              <LogOut className="h-4 w-4" />
+              Logout
+            </button>
+          </div>
         </div>
       </header>
       

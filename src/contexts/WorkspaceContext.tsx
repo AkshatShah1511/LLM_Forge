@@ -2,14 +2,19 @@
 import React, { createContext, useContext, useState, useEffect } from 'react';
 import { v4 as uuidv4 } from 'uuid';
 import { Workspace } from '@/types/workspace';
+import { Project } from '@/types/project';
+import { toast } from 'sonner';
 
 interface WorkspaceContextType {
   workspaces: Workspace[];
   currentWorkspace: Workspace | null;
+  projects: Project[];
+  workspaceProjects: Project[];
   createWorkspace: (name: string, description?: string) => void;
   renameWorkspace: (id: string, name: string) => void;
   deleteWorkspace: (id: string) => void;
   setCurrentWorkspace: (id: string) => void;
+  createProject: (name: string, description?: string) => Workspace | null;
 }
 
 const WorkspaceContext = createContext<WorkspaceContextType | undefined>(undefined);
@@ -17,11 +22,13 @@ const WorkspaceContext = createContext<WorkspaceContextType | undefined>(undefin
 export function WorkspaceProvider({ children }: { children: React.ReactNode }) {
   const [workspaces, setWorkspaces] = useState<Workspace[]>([]);
   const [currentWorkspace, setCurrentWorkspace] = useState<Workspace | null>(null);
+  const [projects, setProjects] = useState<Project[]>([]);
 
-  // Load workspaces from localStorage on initial render
+  // Load workspaces and projects from localStorage on initial render
   useEffect(() => {
     const savedWorkspaces = localStorage.getItem('workspaces');
     const savedCurrentWorkspaceId = localStorage.getItem('currentWorkspaceId');
+    const savedProjects = localStorage.getItem('projects');
     
     if (savedWorkspaces) {
       const parsedWorkspaces = JSON.parse(savedWorkspaces);
@@ -34,9 +41,13 @@ export function WorkspaceProvider({ children }: { children: React.ReactNode }) {
         }
       }
     }
+
+    if (savedProjects) {
+      setProjects(JSON.parse(savedProjects));
+    }
   }, []);
 
-  // Save workspaces to localStorage when they change
+  // Save workspaces and projects to localStorage when they change
   useEffect(() => {
     if (workspaces.length > 0) {
       localStorage.setItem('workspaces', JSON.stringify(workspaces));
@@ -45,7 +56,16 @@ export function WorkspaceProvider({ children }: { children: React.ReactNode }) {
     if (currentWorkspace) {
       localStorage.setItem('currentWorkspaceId', currentWorkspace.id);
     }
-  }, [workspaces, currentWorkspace]);
+    
+    if (projects.length > 0) {
+      localStorage.setItem('projects', JSON.stringify(projects));
+    }
+  }, [workspaces, currentWorkspace, projects]);
+
+  // Get projects for the current workspace
+  const workspaceProjects = currentWorkspace 
+    ? projects.filter(project => project.workspaceId === currentWorkspace.id)
+    : [];
 
   const createWorkspace = (name: string, description?: string) => {
     const newWorkspace: Workspace = {
@@ -58,6 +78,8 @@ export function WorkspaceProvider({ children }: { children: React.ReactNode }) {
     
     setWorkspaces([...workspaces, newWorkspace]);
     setCurrentWorkspace(newWorkspace);
+    
+    toast.success("Workspace created successfully");
   };
 
   const renameWorkspace = (id: string, name: string) => {
@@ -75,15 +97,23 @@ export function WorkspaceProvider({ children }: { children: React.ReactNode }) {
         setCurrentWorkspace(updated);
       }
     }
+    
+    toast.success("Workspace renamed successfully");
   };
 
   const deleteWorkspace = (id: string) => {
     const filteredWorkspaces = workspaces.filter(workspace => workspace.id !== id);
     setWorkspaces(filteredWorkspaces);
     
+    // Delete all projects in this workspace
+    const filteredProjects = projects.filter(project => project.workspaceId !== id);
+    setProjects(filteredProjects);
+    
     if (currentWorkspace?.id === id) {
       setCurrentWorkspace(filteredWorkspaces[0] || null);
     }
+    
+    toast.success("Workspace deleted successfully");
   };
 
   const selectWorkspace = (id: string) => {
@@ -93,15 +123,39 @@ export function WorkspaceProvider({ children }: { children: React.ReactNode }) {
     }
   };
 
+  const createProject = (name: string, description?: string) => {
+    if (!currentWorkspace) {
+      toast.error("Please select a workspace first");
+      return null;
+    }
+
+    const newProject: Project = {
+      id: uuidv4(),
+      name,
+      description,
+      workspaceId: currentWorkspace.id,
+      createdAt: new Date(),
+      updatedAt: new Date()
+    };
+
+    setProjects([...projects, newProject]);
+    toast.success("Project created successfully");
+    
+    return currentWorkspace;
+  };
+
   return (
     <WorkspaceContext.Provider 
       value={{
         workspaces,
         currentWorkspace,
+        projects,
+        workspaceProjects,
         createWorkspace,
         renameWorkspace,
         deleteWorkspace,
-        setCurrentWorkspace: selectWorkspace
+        setCurrentWorkspace: selectWorkspace,
+        createProject
       }}
     >
       {children}

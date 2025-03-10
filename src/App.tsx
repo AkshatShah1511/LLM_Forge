@@ -9,26 +9,29 @@ import AuthPage from "./pages/AuthPage";
 import NotFound from "./pages/NotFound";
 import WorkspacePage from "./pages/WorkspacePage";
 import { WorkspaceProvider } from "./contexts/WorkspaceContext";
+import { ThemeProvider } from "./contexts/ThemeContext";
 
 const queryClient = new QueryClient();
 
 const App = () => (
   <QueryClientProvider client={queryClient}>
-    <WorkspaceProvider>
-      <TooltipProvider>
-        <Toaster />
-        <Sonner />
-        <BrowserRouter>
-          <Routes>
-            <Route path="/" element={<AuthPage />} />
-            <Route path="/dashboard" element={<Index />} />
-            <Route path="/workspace" element={<WorkspacePage />} />
-            {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
-            <Route path="*" element={<NotFound />} />
-          </Routes>
-        </BrowserRouter>
-      </TooltipProvider>
-    </WorkspaceProvider>
+    <ThemeProvider>
+      <WorkspaceProvider>
+        <TooltipProvider>
+          <Toaster />
+          <Sonner />
+          <BrowserRouter>
+            <Routes>
+              <Route path="/" element={<AuthPage />} />
+              <Route path="/dashboard" element={<Index />} />
+              <Route path="/workspace" element={<WorkspacePage />} />
+              {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
+              <Route path="*" element={<NotFound />} />
+            </Routes>
+          </BrowserRouter>
+        </TooltipProvider>
+      </WorkspaceProvider>
+    </ThemeProvider>
   </QueryClientProvider>
 );
 
