@@ -2,7 +2,7 @@
 import React, { useState } from 'react';
 import { useProfile } from '@/contexts/ProfileContext';
 import { Sidebar } from '@/components/layout/Sidebar';
-import { Edit2, Check, Camera, Mail, UserRound, Badge } from 'lucide-react';
+import { Edit2, Check, Camera, Mail, UserRound, Badge, CreditCard } from 'lucide-react';
 import { toast } from 'sonner';
 
 const ProfilePage = () => {
